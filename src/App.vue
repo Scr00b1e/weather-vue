@@ -15,25 +15,27 @@ export default {
   methods: {
     async getData() {
       try {
-        const res = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${this.city}&units=imperial&appid=895284fb2d2c50a520ea537456963d9c`)
+        const res = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=london&units=imperial&appid=895284fb2d2c50a520ea537456963d9c`)
         this.city = res.data
+        console.log(res.data)
       } catch {
         alert('Something is wrong...')
       }
     },
-    onData() {
-      console.log(this.city)
-    }
+    // onData() {
+    //   console.log(this.city)
+    // }
   },
-  // mounted() {
-  //   this.getData()
-  // }
+  mounted() {
+    this.getData()
+  }
 }
 </script>
 
 <template>
   <div class="app">
     <div>
+      <input type="text" :value="city" @input="e => e.target.value">
       <Item />
       <button @click="onData">Click me</button>
     </div>
