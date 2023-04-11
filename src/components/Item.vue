@@ -1,6 +1,6 @@
 <template>
-    <div>
-        sup bros
+    <div v-if="cityInfo != null">
+        {{ cityInfo.name }}
         324 celcium
         rainy
     </div>
@@ -8,8 +8,11 @@
 
 <script>
 export default {
-
+    props: {
+        type: Object,
+        required: true
+    }
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style scoped></style>

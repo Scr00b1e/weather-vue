@@ -6,6 +6,7 @@ import axios from 'axios'
 export default {
   data() {
     return {
+      cityInfo: {},
       city: ''
     }
   },
@@ -15,28 +16,30 @@ export default {
   methods: {
     async getData() {
       try {
-        const res = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=london&units=imperial&appid=895284fb2d2c50a520ea537456963d9c`)
-        this.city = res.data
-        console.log(res.data)
+        const res = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${this.city}&units=imperial&appid=895284fb2d2c50a520ea537456963d9c`)
+        this.cityInfo = res.data
       } catch {
         alert('Something is wrong...')
+      } finally {
+        this.city = ''
+        console.log(this.cityInfo)
       }
     },
-    // onData() {
-    //   console.log(this.city)
-    // }
+    onData() {
+      this.getData()
+    }
   },
-  mounted() {
-    this.getData()
-  }
+  // mounted() {
+  //   this.getData()
+  // }
 }
 </script>
 
 <template>
   <div class="app">
     <div>
-      <input type="text" :value="city" @input="e => e.target.value">
-      <Item />
+      <input type="text" v-model="this.city">
+      <Item :cityInfo="this.cityInfo" />
       <button @click="onData">Click me</button>
     </div>
   </div>
