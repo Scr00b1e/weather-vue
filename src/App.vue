@@ -14,31 +14,30 @@ export default {
     Item
   },
   methods: {
-    async getData() {
-      try {
-        const res = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${this.city}&units=imperial&appid=895284fb2d2c50a520ea537456963d9c`)
-        this.cityInfo = res.data
-      } catch {
-        alert('Something is wrong...')
-      } finally {
-        this.city = ''
-        console.log(this.cityInfo)
+    async getData(e) {
+      if (e.key == "Enter") {
+        try {
+          const res = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${this.city}&units=imperial&appid=895284fb2d2c50a520ea537456963d9c`)
+          this.cityInfo = res.data
+        } catch {
+          alert('Something is wrong...')
+        } finally {
+          this.city = ''
+          console.log(this.cityInfo)
+        }
       }
     },
     onData() {
       this.getData()
     }
   },
-  // mounted() {
-  //   this.getData()
-  // }
 }
 </script>
 
 <template>
   <div class="app">
     <div>
-      <input type="text" v-model="this.city">
+      <input type="text" v-model="this.city" @keypress="getData">
       <Item :cityInfo="this.cityInfo" />
       <button @click="onData">Click me</button>
     </div>
