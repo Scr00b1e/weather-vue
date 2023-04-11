@@ -1,6 +1,27 @@
+<template>
+  <div class="app">
+    <div>
+      <input type="text" v-model="this.city" @keypress="getData">
+
+      <h1 v-if="cityInfo.sys != null">{{ cityInfo.name }}, {{ cityInfo.sys.country }}</h1>
+
+      <div v-if="cityInfo.weather != null">
+        <p>{{ cityInfo.weather[0].main }}</p>
+        <p>{{ cityInfo.weather[0].description }}</p>
+      </div>
+
+      <div v-if="cityInfo.main != null">
+        <p>{{ Math.ceil(cityInfo.main.feels_like) }} feels lilke</p>
+        <p>{{ Math.ceil(cityInfo.main.temp) }} temp</p>
+        <p>{{ cityInfo.main.pressure }} pressure</p>
+      </div>
+
+      <button @click="onData">Find</button>
+    </div>
+  </div>
+</template>
+
 <script>
-import { RouterLink, RouterView } from 'vue-router'
-import Item from './components/Item.vue';
 import axios from 'axios'
 
 export default {
@@ -9,9 +30,6 @@ export default {
       cityInfo: {},
       city: ''
     }
-  },
-  components: {
-    Item
   },
   methods: {
     async getData(e) {
@@ -33,16 +51,6 @@ export default {
   },
 }
 </script>
-
-<template>
-  <div class="app">
-    <div>
-      <input type="text" v-model="this.city" @keypress="getData">
-      <Item :cityInfo="this.cityInfo" />
-      <button @click="onData">Click me</button>
-    </div>
-  </div>
-</template>
 
 <style>
 *,
